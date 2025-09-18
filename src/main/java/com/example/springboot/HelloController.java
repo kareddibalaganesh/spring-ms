@@ -8,7 +8,7 @@ public class HelloController {
 
 	@RequestMapping("/")
 	public String index() {
-		return "Welcome to SRINFOTECH SOlutions Private Limited ANd AWS & DEVOPS Training Batch3!";
+		return "Welcome to SRINFOTECH SOlutions Private Limited ANd AWS & DEVOPS Training!";
 	}
 
 }
