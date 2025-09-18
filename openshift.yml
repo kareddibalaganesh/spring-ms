@@ -1,1 +1,56 @@
-
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webserver
+  namespace: {yourname}1
+  labels:
+    app: web
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: web
+  template:
+    metadata:
+      labels:
+        app: web
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "128Mi"
+          limits:
+            cpu: "250m"
+            memory: "256Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: webserver
+  namespace: {yourname}1
+spec:
+  selector:
+    app: web
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: webserver
+  namespace: {yourname}1
+spec:
+  to:
+    kind: Service
+    name: webserver
+  port:
+    targetPort: 80
+  tls:
+    termination: edge
